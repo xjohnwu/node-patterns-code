@@ -1,8 +1,8 @@
 // https://www.yld.io/blog/streams-readable-writable-transform-flow-control/
-var Thermometer = require('./thermometer');
+var Thermometer = require("./thermometer");
 
-var thermomether = Thermometer();
+var thermomether = new Thermometer();
 
-thermomether.on('data', function(temp) {
-  console.log('temp:', temp);
+thermomether.on("data", function (temp) {
+  console.log("temp:", temp);
 });
