@@ -1,6 +1,6 @@
 // https://www.yld.io/blog/using-a-remote-emitter/
-var Reconnect = require('reconnect-net');
-var DuplexEmitter = require('duplex-emitter');
+var Reconnect = require("reconnect-net");
+var DuplexEmitter = require("duplex-emitter");
 
 var hostname = process.argv[2];
 var port = Number(process.argv[3]);
@@ -9,18 +9,21 @@ var timeoutSecs = Number(process.argv[4]);
 var timeout;
 var warned = false;
 
-const reconnect = Reconnect(onConnect).connect(port, hostname);
+const reconnect = Reconnect(onConnect);
 
-reconnect.on('disconnect', function() {
-  console.log('disconnected');
+reconnect.on("disconnect", function () {
+  console.log("disconnected");
 });
 
+reconnect.on("error", (err) => console.error("error", err));
+reconnect.connect(port, hostname);
+
 function onConnect(conn) {
-  console.log('connected');
+  console.log("connected");
   var remoteEmitter = DuplexEmitter(conn);
 
-  remoteEmitter.on('open', onOpen);
-  remoteEmitter.on('close', onClose);
+  remoteEmitter.on("open", onOpen);
+  remoteEmitter.on("close", onClose);
 }
 
 function onOpen() {
@@ -30,7 +33,7 @@ function onOpen() {
 function onClose() {
   if (warned) {
     warned = false;
-    console.log('closed now');
+    console.log("closed now");
   }
   if (timeout) {
     clearTimeout(timeout);
@@ -40,6 +43,7 @@ function onClose() {
 function onTimeout() {
   warned = true;
   console.error(
-    'DOOR OPEN FOR MORE THAN %d SECONDS, GO CLOSE IT!!!',
-    timeoutSecs);
+    "DOOR OPEN FOR MORE THAN %d SECONDS, GO CLOSE IT!!!",
+    timeoutSecs
+  );
 }
