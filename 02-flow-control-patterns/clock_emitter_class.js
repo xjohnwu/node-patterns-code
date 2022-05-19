@@ -1,41 +1,35 @@
 // https://www.yld.io/blog/using-an-event-emitter-common-use-and-edge-cases/
 
-var inherits = require('util').inherits;
-var EventEmitter = require('events').EventEmitter;
+var EventEmitter = require("events").EventEmitter;
 
-module.exports = Clock;
+class Clock extends EventEmitter {
+  constructor() {
+    super();
+    this._started = false;
+  }
 
-function Clock() {
-  if (! (this instanceof Clock)) return new Clock();
+  start() {
+    if (this._started) return;
 
-  this._started = false;
+    var tic = true;
 
-  EventEmitter.call(this);
+    this._started = Date.now();
+
+    this._interval = setInterval(() => {
+      var event = tic ? "tic" : "toc";
+      this.emit(event, this.time());
+      tic = !tic;
+    }, 1000);
+  }
+
+  stop() {
+    clearInterval(this._interval);
+    this._started = false;
+  }
+
+  time() {
+    return this._started && Date.now() - this._started;
+  }
 }
 
-inherits(Clock, EventEmitter);
-
-Clock.prototype.start = function start() {
-  var self = this;
-
-  if (self._started) return;
-
-  var tic = true;
-
-  this._started = Date.now();
-
-  self._interval = setInterval(function() {
-    var event = tic ? 'tic' : 'toc';
-    self.emit(event, self.time());
-    tic = ! tic;
-  }, 1000);
-};
-
-Clock.prototype.stop = function stop() {
-  clearInterval(this._interval);
-  this._started = false;
-};
-
-Clock.prototype.time = function() {
-  return this._started && Date.now() - this._started;
-};
+module.exports = Clock
