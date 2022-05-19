@@ -1,3 +1,4 @@
+// https://www.yld.io/blog/building-a-tcp-service-using-node-js/
 var extend = require('util')._extend;
 var inherits = require('util').inherits;
 var Transform = require('stream').Transform;

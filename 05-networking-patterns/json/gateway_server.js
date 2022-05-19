@@ -1,3 +1,4 @@
+// https://www.yld.io/blog/building-a-tcp-service-using-node-js/
 var net = require('net');
 var server = net.createServer();
 var JSONDuplexStream = require('json-duplex-stream');

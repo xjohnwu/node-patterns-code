@@ -1,3 +1,4 @@
+// https://www.yld.io/blog/using-a-remote-emitter/
 var net = require('net');
 var DuplexEmitter = require('duplex-emitter');
 
