@@ -1,3 +1,5 @@
+// https://www.yld.io/blog/using-an-event-emitter-common-use-and-edge-cases/
+
 var inherits = require('util').inherits;
 var EventEmitter = require('events').EventEmitter;
 

@@ -1,3 +1,5 @@
+// https://www.yld.io/blog/using-an-event-emitter-common-use-and-edge-cases/
+
 var EventEmitter = require('events').EventEmitter;
 
 var emitter = new EventEmitter();
