@@ -42,6 +42,14 @@ var sensors = [
 // handle connections
 
 function handleConnection(conn) {
+  /*
+When a connection comes in:
+1. create a Mux
+2. conn.pipe(mx).pipe(conn)
+3. for each sensor, create a substream using mx.createWriteStream(sensor.name)
+4. wrap the substream with DuplexEmitter as remoteEmitter
+  */
+
   var mx = Mux();
 
   conn.on('error', onError);
