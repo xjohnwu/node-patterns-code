@@ -7,4 +7,6 @@
 3. Configuration Patterns
 4. Work Queues
 5. Networking Patterns
+   * [https://www.yld.io/blog/using-a-remote-emitter/]()
+   * [https://www.yld.io/blog/multiplexing-streams/]()
 6. Database Patterns

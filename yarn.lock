@@ -9,6 +9,32 @@ backoff@~2.5.0:
   dependencies:
     precond "0.2"
 
+base64-js@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-0.0.2.tgz#024f0f72afa25b75f9c0ee73cd4f55ec1bed9784"
+  integrity sha512-Pj9L87dCdGcKlSqPVUjD+q96pbIx1zQQLb2CUiWURfjiBELv84YX+0nGnKmyT/9KkC7PQk7UN1w+Al8bBozaxQ==
+
+base64-js@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.0.2.tgz#474211c95e6cf2a547db461e4f6778b51d08fa65"
+  integrity sha512-ZXBDPMt/v/8fsIqn+Z5VwrhdR6jVka0bYobHdGia0Nxi7BJ9i/Uvml3AocHIBtIIBhZjBw5MR0aR4ROs/8+SNg==
+
+bops@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/bops/-/bops-1.0.0.tgz#631a8928f1178417eb6f706cf69acdb5e5a4eaad"
+  integrity sha512-vVai54aP4LqbM+KNB1giwMo9nHvlV7pc7+iUNHYDTQe6WWI9L/jeSPBC89kUz3xA8qD7sZLldHxOXip1npWbmw==
+  dependencies:
+    base64-js "1.0.2"
+    to-utf8 "0.0.1"
+
+bops@~0.0.6:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/bops/-/bops-0.0.7.tgz#b4a0a5a839a406454af0fe05a8b91a7a766a54e2"
+  integrity sha512-oF8JFj2vZoTTzbS4haaB/37vqoJbZXxPBWmNdFONu3dUBW+zp7JcoIIYYd1r+4/YwFM8QUSR1u4rrPbtcdHsRg==
+  dependencies:
+    base64-js "0.0.2"
+    to-utf8 "0.0.1"
+
 duplex-emitter@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/duplex-emitter/-/duplex-emitter-2.1.2.tgz#10c9cf2b13a7dbfff6264955dca45396e8e7db5e"
@@ -18,10 +44,49 @@ duplex-emitter@^2.1.2:
     stream-combiner "0.0.2"
     through "~2.3.4"
 
+duplex@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/duplex/-/duplex-1.0.0.tgz#6abc5c16ec17e4c578578727126700590d3a2dda"
+  integrity sha1-arxcFuwX5MV4V4cnEmcAWQ06Ldo=
+
 duplexer@~0.0.3:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.0.4.tgz#afcb7f1f8b8d74f820726171d5d64ac9e4a8ff20"
   integrity sha1-r8t/H4uNdPggcmFx1dZKyeSo/yA=
+
+json-buffer@~2.0.4:
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/json-buffer/-/json-buffer-2.0.11.tgz#3e441fda3098be8d1e3171ad591bc62a33e2d55f"
+  integrity sha1-PkQf2jCYvo0eMXGtWRvGKjPi1V8=
+
+msgpack-js@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/msgpack-js/-/msgpack-js-0.3.0.tgz#030ec08c5956f9ca7d17d40a572d5396fec10923"
+  integrity sha1-Aw7AjFlW+cp9F9QKVy1Tlv7BCSM=
+  dependencies:
+    bops "~0.0.6"
+
+msgpack-stream@~0.0.10:
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/msgpack-stream/-/msgpack-stream-0.0.13.tgz#50a673ac4eaeca5e37701924d093d43350c1e52c"
+  integrity sha1-UKZzrE6uyl43cBkk0JPUM1DB5Sw=
+  dependencies:
+    bops "1.0.0"
+    msgpack-js "0.3.0"
+    through "2.3.4"
+
+mux-demux@^3.7.9:
+  version "3.7.9"
+  resolved "https://registry.yarnpkg.com/mux-demux/-/mux-demux-3.7.9.tgz#35367718fd3601c80bce2eb762531576d7a4acef"
+  integrity sha1-NTZ3GP02AcgLzi63YlMVdtekrO8=
+  dependencies:
+    duplex "~1.0.0"
+    json-buffer "~2.0.4"
+    msgpack-stream "~0.0.10"
+    stream-combiner "0.0.2"
+    stream-serializer "~1.1.1"
+    through "~2.3.1"
+    xtend "~1.0.3"
 
 precond@0.2:
   version "0.2.3"
@@ -56,7 +121,27 @@ stream-combiner@0.0.2:
   dependencies:
     duplexer "~0.0.3"
 
-through@2, through@~2.3.4:
+stream-serializer@~1.1.1:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/stream-serializer/-/stream-serializer-1.1.2.tgz#c1f97d15da251f594ae27d41ec8ada09a846e34f"
+  integrity sha1-wfl9FdolH1lK4n1B7IraCahG408=
+
+through@2, through@~2.3.1, through@~2.3.4:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
+
+through@2.3.4:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/through/-/through-2.3.4.tgz#495e40e8d8a8eaebc7c275ea88c2b8fc14c56455"
+  integrity sha1-SV5A6Nio6uvHwnXqiMK4/BTFZFU=
+
+to-utf8@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/to-utf8/-/to-utf8-0.0.1.tgz#d17aea72ff2fba39b9e43601be7b3ff72e089852"
+  integrity sha1-0Xrqcv8vujm55DYBvns/9y4ImFI=
+
+xtend@~1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/xtend/-/xtend-1.0.3.tgz#3f5d937353cced8e085399a563fdb22541c2960a"
+  integrity sha1-P12Tc1PM7Y4IU5mlY/2yJUHClgo=

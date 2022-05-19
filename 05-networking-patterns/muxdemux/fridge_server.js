@@ -1,6 +1,12 @@
+// https://www.yld.io/blog/multiplexing-streams/
 var net = require('net');
 var DuplexEmitter = require('duplex-emitter');
 var Mux = require('mux-demux');
+/* 
+mux-demux lets us:
+* on the server side, multiplex several streams into one stream;
+* on the client side, do the inverse: de-multiplex that stream into separate streams to treat them individually
+*/
 
 var server = net.createServer();
 
