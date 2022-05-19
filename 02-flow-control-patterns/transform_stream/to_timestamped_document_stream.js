@@ -1,20 +1,16 @@
-var Transform = require('stream').Transform;
-var inherits = require('util').inherits;
+var Transform = require("stream").Transform;
 
-module.exports = JSONTransform;
+class JSONTransform extends Transform {
+  constructor(options) {
+    if (!options) options = {};
+    options.objectMode = true;
+    super(options);
+  }
 
-function JSONTransform(options) {
-  if ( ! (this instanceof JSONTransform))
-    return new JSONTransform(options);
-
-  if (! options) options = {};
-  options.objectMode = true;
-  Transform.call(this, options);
+  _transform(temperature, encoding, callback) {
+    this.push({ when: Date.now(), temperature: temperature });
+    callback();
+  }
 }
 
-inherits(JSONTransform, Transform);
-
-JSONTransform.prototype._transform = function _transform(temperature, encoding, callback) {
-  this.push({when: Date.now(), temperature: temperature});
-  callback();
-};
+module.exports = JSONTransform;

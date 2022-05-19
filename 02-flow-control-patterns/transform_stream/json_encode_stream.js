@@ -1,26 +1,21 @@
-var Transform = require('stream').Transform;
-var inherits = require('util').inherits;
+var Transform = require("stream").Transform;
 
-module.exports = JSONEncode;
+class JSONEncode extends Transform {
+  constructor(options) {
+    if (!options) options = {};
+    options.objectMode = true;
+    super(options);
+  }
+  _transform(obj, encoding, callback) {
+    try {
+      obj = JSON.stringify(obj);
+    } catch (err) {
+      return callback(err);
+    }
 
-function JSONEncode(options) {
-  if ( ! (this instanceof JSONEncode))
-    return new JSONEncode(options);
-
-  if (! options) options = {};
-  options.objectMode = true;
-  Transform.call(this, options);
+    this.push(obj);
+    callback();
+  }
 }
 
-inherits(JSONEncode, Transform);
-
-JSONEncode.prototype._transform = function _transform(obj, encoding, callback) {
-  try {
-    obj = JSON.stringify(obj);
-  } catch(err) {
-    return callback(err);
-  }
-
-  this.push(obj);
-  callback();
-};
+module.exports = JSONEncode;
