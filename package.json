@@ -1,0 +1,12 @@
+{
+  "name": "node-patterns-code",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/xjohnwu/node-patterns-code.git",
+  "author": "Han Wu <xjohnwu@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "duplex-emitter": "^2.1.2",
+    "reconnect-net": "^1.1.1"
+  }
+}

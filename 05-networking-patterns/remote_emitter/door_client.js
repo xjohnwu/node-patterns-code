@@ -1,6 +1,6 @@
 // https://www.yld.io/blog/using-a-remote-emitter/
-var net = require('net');
-var DuplexEmitter = require('duplex-emitter');
+var net = require("net");
+var DuplexEmitter = require("duplex-emitter");
 
 var hostname = process.argv[2];
 var port = Number(process.argv[3]);
@@ -12,8 +12,8 @@ var warned = false;
 var conn = net.connect(port, hostname);
 var remoteEmitter = DuplexEmitter(conn);
 
-remoteEmitter.on('open', onOpen);
-remoteEmitter.on('close', onClose);
+remoteEmitter.on("open", onOpen);
+remoteEmitter.on("close", onClose);
 
 function onOpen(time) {
   timeout = setTimeout(onTimeout, timeoutSecs * 1e3);
@@ -22,7 +22,7 @@ function onOpen(time) {
 function onClose() {
   if (warned) {
     warned = false;
-    console.log('closed now');
+    console.log("closed now");
   }
   if (timeout) {
     clearTimeout(timeout);
@@ -32,6 +32,7 @@ function onClose() {
 function onTimeout() {
   warned = true;
   console.error(
-    'DOOR OPEN FOR MORE THAN %d SECONDS, GO CLOSE IT!!!',
-    timeoutSecs);
+    "DOOR OPEN FOR MORE THAN %d SECONDS, GO CLOSE IT!!!",
+    timeoutSecs
+  );
 }

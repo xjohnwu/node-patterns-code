@@ -9,7 +9,7 @@ var timeoutSecs = Number(process.argv[4]);
 var timeout;
 var warned = false;
 
-reconnect = Reconnect(onConnect).connect(port, hostname);
+const reconnect = Reconnect(onConnect).connect(port, hostname);
 
 reconnect.on('disconnect', function() {
   console.log('disconnected');

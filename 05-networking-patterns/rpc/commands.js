@@ -1,3 +1,4 @@
+// https://www.yld.io/blog/turning-a-stream-into-an-rpc-channel/
 var commands = exports;
 
 commands.setTargetTemperature = randomTimeout(null, 'command accepted, target temperature set');
