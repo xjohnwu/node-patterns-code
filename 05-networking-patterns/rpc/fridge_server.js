@@ -1,47 +1,45 @@
-var net = require('net');
-var DuplexEmitter = require('duplex-emitter');
-var Mux = require('mux-demux');
-var dnode = require('dnode');
-var commands = require('./commands');
+var net = require("net");
+var DuplexEmitter = require("duplex-emitter");
+var Mux = require("mux-demux");
+var dnode = require("dnode");
+var commands = require("./commands");
 
 var server = net.createServer();
 
-server.on('connection', handleConnection);
+server.on("connection", handleConnection);
 
-server.listen(8000, function() {
-  console.log('door server listening on %j', server.address());
+server.listen(8000, function () {
+  console.log("door server listening on %j", server.address());
 });
-
 
 // sensors
 
 var sensors = [
   {
-    name: 'door',
-    events: ['open', 'close'],
-    emitter: require('./door'),
+    name: "door",
+    events: ["open", "close"],
+    emitter: require("./door"),
     remotes: {},
     nextId: 0,
-    lastEvent: undefined
+    lastEvent: undefined,
   },
   {
-    name: 'temperature',
-    events: ['reading'],
-    emitter: require('./thermometer'),
+    name: "temperature",
+    events: ["reading"],
+    emitter: require("./thermometer"),
     remotes: {},
     nextId: 0,
-    lastEvent: undefined
+    lastEvent: undefined,
   },
 ];
-
 
 // handle connections
 
 function handleConnection(conn) {
-  var mx = Mux(handleConnection);
+  var mx = Mux(handleRpcConnection);
 
-  conn.on('error', onError);
-  mx.on('error', onError);
+  conn.on("error", onError);
+  mx.on("error", onError);
 
   conn.pipe(mx).pipe(conn);
 
@@ -51,12 +49,12 @@ function handleConnection(conn) {
     var stream = mx.createWriteStream(sensor.name);
     var remoteEmitter = DuplexEmitter(stream);
 
-    stream.once('close', onClose);
-    stream.on('error', onError);
-    mx.on('error', onError);
+    stream.once("close", onClose);
+    stream.on("error", onError);
+    mx.on("error", onError);
 
     // add remote to sensor remotes
-    var id = ++ sensor.nextId;
+    var id = ++sensor.nextId;
     sensor.remotes[id] = remoteEmitter;
 
     if (sensor.lastEvent) {
@@ -66,41 +64,34 @@ function handleConnection(conn) {
     function onClose() {
       delete sensor.remotes[id];
     }
-
   }
-
 
   /// RPC
 
-  function handleConnection(conn) {
-    if (conn.meta != 'rpc') {
-      onError(new Error('Invalid stream name: ' + conn.meta));
-    }
-    else {
-      var d = dnode(commands);
+  function handleRpcConnection(conn) {
+    if (conn.meta != "rpc") {
+      onError(new Error("Invalid stream name: " + conn.meta));
+    } else {
+      var d = dnode(commands, { weak: false });
       conn.pipe(d).pipe(conn);
     }
   }
 
-
   function onError(err) {
     conn.destroy();
-    console.error('Error on connection: ' + err.message);
+    console.error("Error on connection: " + err.message);
   }
-
 }
-
 
 /// broadcast all sensor events to connections
 
-sensors.forEach(function(sensor) {
-  sensor.events.forEach(function(event) {
-
+sensors.forEach(function (sensor) {
+  sensor.events.forEach(function (event) {
     // broadcast all events of type `event`
     sensor.emitter.on(event, broadcast(event, sensor.remotes));
 
     // store last event on `sensor.lastEvent`
-    sensor.emitter.on(event, function() {
+    sensor.emitter.on(event, function () {
       var args = Array.prototype.slice.call(arguments);
       args.unshift(event);
       sensor.lastEvent = args;
@@ -109,14 +100,13 @@ sensors.forEach(function(sensor) {
 });
 
 function broadcast(event, remotes) {
-  return function() {
+  return function () {
     var args = Array.prototype.slice.call(arguments);
     args.unshift(event);
 
-    Object.keys(remotes).forEach(function(emitterId) {
+    Object.keys(remotes).forEach(function (emitterId) {
       var remote = remotes[emitterId];
       remote.emit.apply(remote, args);
     });
-
   };
 }

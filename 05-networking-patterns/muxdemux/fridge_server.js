@@ -61,6 +61,7 @@ When a connection comes in:
 
   function attachSensor(sensor) {
     var stream = mx.createWriteStream(sensor.name);
+    console.log(stream)
     var remoteEmitter = DuplexEmitter(stream);
 
     stream.once('close', onClose);
