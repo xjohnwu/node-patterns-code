@@ -1,6 +1,6 @@
 // https://www.yld.io/blog/using-an-event-emitter-common-use-and-edge-cases/
 
-let Clock = require("./clock_emitter_class_new");
+let Clock = require("./clock_emitter_composed");
 let clock = new Clock();
 clock.on("tic", function (t) {
   console.log("tic:", t);
