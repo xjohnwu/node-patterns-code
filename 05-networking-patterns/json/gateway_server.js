@@ -12,7 +12,7 @@ server.listen(8000, function() {
 
 function handleConnection(conn) {
   var s = JSONDuplexStream();
-  var gateway = Gateway();
+  var gateway = new Gateway();
   conn.
     pipe(s.in).
     pipe(gateway).
